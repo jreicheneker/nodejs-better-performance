@@ -19,3 +19,9 @@ app.use(express.bodyParser());
 app.get('/getpost', function (req, res) {
 	res.end(postTemplate(posts[Math.floor(Math.random() * 3)]));
 });
+
+io.sockets.on('connection', function (socket) {
+  socket.on('getpost', function () {
+    socket.emit('getpost', posts[Math.floor(Math.random() * 3)]);
+  });
+});
