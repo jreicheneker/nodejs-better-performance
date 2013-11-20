@@ -1,6 +1,4 @@
 var express = require('express');
-var dot = require('dot').template;
-var fs = require('fs');
 var sio = require('socket.io');
 
 var app = express();
@@ -17,8 +15,6 @@ var posts = [
 
 app.use(express.static('./static'));
 app.use(express.bodyParser());
-
-var postTemplate = dot(fs.readFileSync('./post.dot'));
 
 app.get('/getpost', function (req, res) {
 	res.end(postTemplate(posts[Math.floor(Math.random() * 3)]));
