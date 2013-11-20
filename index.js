@@ -1,8 +1,13 @@
 var express = require('express');
 var dot = require('dot').template;
 var fs = require('fs');
+var sio = require('socket.io');
 
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+
+server.listen(8080);
 
 var posts = [
 	{ avatar: 'av1.gif', author: 'Jane Doe', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pulvinar vehicula enim ut convallis. Aliquam condimentum imperdiet tortor, at fermentum augue cursus vitae. Quisque libero nulla, mattis semper aliquet ac, rhoncus eget dolor. Aliquam commodo eros id justo vehicula mattis.' },
@@ -18,5 +23,3 @@ var postTemplate = dot(fs.readFileSync('./post.dot'));
 app.get('/getpost', function (req, res) {
 	res.end(postTemplate(posts[Math.floor(Math.random() * 3)]));
 });
-
-app.listen(8080);
